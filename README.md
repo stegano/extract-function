@@ -1,2 +1,2 @@
 # extract-function
-Function modularization using JSdoc Annotation style.
+Function modularization with JSdoc Annotation style.
