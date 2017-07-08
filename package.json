@@ -2,8 +2,14 @@
   "name": "extract-function",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "dependencies": {
+    "delete": "^1.1.0",
+    "fs-finder": "^1.8.1",
+    "glob": "^7.1.2",
+    "js-beautify": "^1.6.14",
+    "mkdirp": "^0.5.1",
+    "nconf": "^0.8.4"
   },
   "devDependencies": {
     "chai": "^4.0.2",
