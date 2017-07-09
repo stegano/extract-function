@@ -2,7 +2,10 @@
   "name": "extract-function",
   "version": "1.0.0",
   "description": "",
-  "main": "./lib/index.js",
+  "main": "./lib/Extractor.js",
+  "bin": {
+    "extract-function": "./bin/cli.js"
+  },
   "dependencies": {
     "delete": "^1.1.0",
     "fs-finder": "^1.8.1",
@@ -17,7 +20,8 @@
     "eslint": "^4.1.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/*",
+    "lint": "eslint lib/* bin/*"
   },
   "repository": {
     "type": "git",
