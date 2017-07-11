@@ -11,13 +11,13 @@ var glob = require("glob");
 var program = require("commander");
 program
   .version("0.0.1")
-  .option("-i, --in <path>", "change the working directory")
-  .option("-o, --out <path>", "change the working directory")
-  .option("-b, --beautify <boolean>", "change the working directory", true)
+  .option("-i, --in <path>", "JS source code path.")
+  .option("-o, --out <path>", "Extracted source code path.")
+  .option("-b, --beautify <boolean>", "whether to use `js-beautify`", true)
   .parse(process.argv);
 
 /**
- * 함수를 담고있는 템플릿을 로드함.
+ * 함수를 담을 템플릿을 로드함.
  * */
 var template = fs.readFileSync("./template/basic.js", "utf8");
 
@@ -56,7 +56,14 @@ glob(program.in, function (err, files) {
    * */
   files.forEach(function (extractedCode) {
     extractedCode.forEach(function (item) {
-      var jsCode = template.replace("/!** @replaceCode **!/", item.codeSnippet);
+      var args = item.args;
+      var functionName = item.name;
+      functionName = functionName.replace(/\W/gm, "_");
+      var functionBody = item.body;
+      var jsCode = template;
+      jsCode = jsCode.replace(/\/\*\* @args \*\*\//gim, args);
+      jsCode = jsCode.replace(/\/\*\* @functionName \*\*\//gim, functionName);
+      jsCode = jsCode.replace(/\/\*\* @functionBody \*\*\//gim, functionBody);
       jsCode = program.beautify ? beautify(jsCode) : jsCode;
       if (program.out) {
         fs.writeFileSync(path.join(program.out, item.name + ".js"), jsCode, "utf8");
@@ -64,7 +71,7 @@ glob(program.in, function (err, files) {
         /**
          * 내보낼 파일 경로가 없을 경우 콘솔에 출력.
          * */
-        console.log(`/!** @function ${item.name} **!/`);
+        console.log(`/** @function ${item.name} **/`);
         console.log(jsCode);
       }
     });

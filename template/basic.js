@@ -1,13 +1,16 @@
-(function (global, factory) {
-  if (typeof module === "object" && typeof module.exports === "object") {
-    module.exports = global.document ?
-      factory(global, true) :
-      function (w) {
-        return factory(w);
-      };
-  } else {
-    factory(global);
+/**
+ * AMD 또는 CommonJS 사용 가능하도록 모듈을 제공하는 템플릿.
+ * */
+(function (extract) {
+  if (typeof module === "object" && module.exports) {
+    module.exports = extract;
+  } else if (typeof window === "object" && typeof define === "function") {
+    define("/** @functionName **/", function () {
+      return extract;
+    });
+  } else if (typeof window === "object") {
+    window["/** @functionName **/"] = extract;
   }
-})(typeof window !== "undefined" ? window : this, function (window, noGlobal) {
-  /** @replaceCode **/
+})(function (/** @args **/) {
+  /** @functionBody **/
 });
