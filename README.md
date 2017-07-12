@@ -1,12 +1,12 @@
 Extract module using comment in the source code.
 
 # Installation
-```
+```javascript
 npm i extract-function
 ```
 
 # Demonstration
-```
+```javascript
 extract-function -i ./test/sample.js -o ./result
 ```
 
