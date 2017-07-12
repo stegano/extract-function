@@ -12,7 +12,7 @@ extract-function -i ./test/sample.js -o ./result
 ```
 
 #### ./test/sample.js
-```
+```javascript
 (() => {
   /**
    * @extract BasicFunc
