@@ -11,8 +11,7 @@
     "fs-finder": "^1.8.1",
     "glob": "^7.1.2",
     "js-beautify": "^1.6.14",
-    "mkdirp": "^0.5.1",
-    "nconf": "^0.8.4"
+    "mkdirp": "^0.5.1"
   },
   "devDependencies": {
     "chai": "^4.0.2",
@@ -27,10 +26,19 @@
     "type": "git",
     "url": "git+https://github.com/stegano/extract-function.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "JUNG YONG WOO",
+    "email": "stegano@naver.com"
+  },
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/stegano/extract-function/issues"
   },
-  "homepage": "https://github.com/stegano/extract-function#readme"
+  "homepage": "https://github.com/stegano/extract-function#readme",
+  "keywords": [
+    "legacy",
+    "extract",
+    "test",
+    "TDD"
+  ]
 }
