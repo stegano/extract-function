@@ -1,18 +1,17 @@
-# extract-function
 Extract module using comment in the source code.
 
-## Installation
+# Installation
 ```
 npm i extract-function
 ```
 
-## Demonstration
+# Demonstration
 ```
 extract-function -i ./test/sample.js -o ./result
 ```
 
-#### ./test/sample.js
-```
+## ./test/sample.js
+```javascript
 (() => {
   /**
    * @extract BasicFunc
@@ -62,7 +61,7 @@ extract-function -i ./test/sample.js -o ./result
 });
 ```
 
-#### Result : A list of extracted files.
+## Result : A list of extracted files.
 ```
 ./result
 ├── AnonymousFunction.js
