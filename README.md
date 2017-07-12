@@ -1,12 +1,12 @@
 Extract module using comment in the source code.
 
 # Installation
-```
+```bash
 npm i extract-function
 ```
 
 # Demonstration
-```
+```bash
 extract-function -i ./test/sample.js -o ./result
 ```
 
@@ -62,7 +62,7 @@ extract-function -i ./test/sample.js -o ./result
 ```
 
 ## Result : A list of extracted files.
-```
+```bash
 ./result
 ├── AnonymousFunction.js
 ├── ArgsTest.js
