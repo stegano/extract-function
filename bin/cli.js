@@ -21,7 +21,7 @@ program
 /**
  * 함수를 담을 템플릿을 로드함.
  * */
-var template = fs.readFileSync("./template/basic.js", "utf8");
+var template = fs.readFileSync(path.resolve(__dirname, "../template/basic.js"), "utf8");
 
 /**
  * 추출할 파일 목록을 가져옴.
