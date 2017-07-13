@@ -1,6 +1,6 @@
 {
   "name": "extract-function",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Extract module using comment in the source code.",
   "main": "./lib/Extractor.js",
   "bin": {
