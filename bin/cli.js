@@ -47,7 +47,6 @@ glob(program.in,
       });
     }
 
-    console.log(files);
     /**
      * 파일 본문 내용을 읽어와 함수 정보를 추출.
      * */

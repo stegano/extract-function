@@ -7,7 +7,7 @@ npm i extract-function
 
 # Demonstration
 ```bash
-extract-function -i ./test/sample.js -o ./result
+extract-function -i "./test/sample.js" -o "./result"
 ```
 
 ## ./test/sample.js
