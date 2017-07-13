@@ -26,56 +26,61 @@ var template = fs.readFileSync(path.resolve(__dirname, "../template/basic.js"), 
 /**
  * 추출할 파일 목록을 가져옴.
  * */
-glob(program.in, function (err, files) {
+glob(program.in,
+  {
+    "nodir": true
+  },
+  function (err, files) {
 
-  if (err) {
-    console.log(err);
-  }
+    if (err) {
+      console.log(err);
+    }
 
-  if (program.out) {
+    if (program.out) {
+      /**
+       * 추출될 파일 디렉토리 생성.
+       * */
+      mkdirp(program.out, function (err) {
+        if (err) {
+          console.error(err);
+        }
+      });
+    }
+
+    console.log(files);
     /**
-     * 추출될 파일 디렉토리 생성.
+     * 파일 본문 내용을 읽어와 함수 정보를 추출.
      * */
-    mkdirp(program.out, function (err) {
-      if (err) {
-        console.error(err);
-      }
+    files = files.map(function (file) {
+      var sourceCode = fs.readFileSync(file, "utf8");
+      return new Extractor(sourceCode, {
+        beautify: false
+      }).getExtractCode();
     });
-  }
 
-  /**
-   * 파일 본문 내용을 읽어와 함수 정보를 추출.
-   * */
-  files = files.map(function (file) {
-    var sourceCode = fs.readFileSync(file, "utf8");
-    return new Extractor(sourceCode, {
-      beautify: false
-    }).getExtractCode();
-  });
-
-  /**
-   * 각 파일에서 추출된 함수 정보들을 새로운 파일에 씀.
-   * */
-  files.forEach(function (extractedCode) {
-    extractedCode.forEach(function (item) {
-      var args = item.args;
-      var functionName = item.name;
-      functionName = functionName.replace(/\W/gm, "_");
-      var functionBody = item.body;
-      var jsCode = template;
-      jsCode = jsCode.replace(/\/\*\* @args \*\*\//gim, args);
-      jsCode = jsCode.replace(/\/\*\* @functionName \*\*\//gim, functionName);
-      jsCode = jsCode.replace(/\/\*\* @functionBody \*\*\//gim, functionBody);
-      jsCode = program.beautify ? beautify(jsCode) : jsCode;
-      if (program.out) {
-        fs.writeFileSync(path.join(program.out, item.name + ".js"), jsCode, "utf8");
-      } else {
-        /**
-         * 내보낼 파일 경로가 없을 경우 콘솔에 출력.
-         * */
-        console.log(`/** @function ${item.name} **/`);
-        console.log(jsCode);
-      }
+    /**
+     * 각 파일에서 추출된 함수 정보들을 새로운 파일에 씀.
+     * */
+    files.forEach(function (extractedCode) {
+      extractedCode.forEach(function (item) {
+        var args = item.args;
+        var functionName = item.name;
+        functionName = functionName.replace(/\W/gm, "_");
+        var functionBody = item.body;
+        var jsCode = template;
+        jsCode = jsCode.replace(/\/\*\* @args \*\*\//gim, args);
+        jsCode = jsCode.replace(/\/\*\* @functionName \*\*\//gim, functionName);
+        jsCode = jsCode.replace(/\/\*\* @functionBody \*\*\//gim, functionBody);
+        jsCode = program.beautify ? beautify(jsCode) : jsCode;
+        if (program.out) {
+          fs.writeFileSync(path.join(program.out, item.name + ".js"), jsCode, "utf8");
+        } else {
+          /**
+           * 내보낼 파일 경로가 없을 경우 콘솔에 출력.
+           * */
+          console.log(`/** @function ${item.name} **/`);
+          console.log(jsCode);
+        }
+      });
     });
   });
-});
