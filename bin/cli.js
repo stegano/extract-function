@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var Extractor = require("../lib/Extractor");
 var path = require("path");
 var fs = require("fs");
