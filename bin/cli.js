@@ -12,7 +12,7 @@ var glob = require("glob");
  * */
 var program = require("commander");
 program
-  .version("0.0.1")
+  .version("1.0.5")
   .option("-i, --in <path>", "JS source code path.")
   .option("-o, --out <path>", "Extracted source code path.")
   .option("-b, --beautify <boolean>", "whether to use `js-beautify`", true)
