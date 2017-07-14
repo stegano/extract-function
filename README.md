@@ -1,14 +1,36 @@
-Extract module using comment in the source code.
+You can extract the function in the source code and use it for testing.
 
 # Installation
 ```bash
-npm i extract-function
+npm i extract-function --save-dev
 ```
 
-# Demonstration
-```bash
-extract-function -i "./test/sample.js" -o "./result"
+# Using module in source code
+```javascript
+var sourceCode = `
+  /**
+   * @extract BasicFunc
+   * */
+  function basicFunc() {
+    // OK
+  }
+  function test() {
+    // OK
+  }
+  `;
+var ExtractFunction = require("extract-function");
+var ef = new ExtractFunction(sourceCode);
+ef.hasAnnotationName("extract"); // -> `true`
+ef.getAnnotationnValue("extract"); // -> `BasicFunc`
+ef.getComments(); // -> `/**\n    * @extract BasicFunc\n    * */`
+ef.getClosestFunction(); // -> `function basicFuc() {\n      // OK\n    }`
 ```
+
+# Using the Command Line
+```bash
+./node_modules/.bin/extract-function -i "./test/sample.js" -o "./result"
+```
+
 
 ## ./test/sample.js
 ```javascript
@@ -61,7 +83,7 @@ extract-function -i "./test/sample.js" -o "./result"
 });
 ```
 
-## Result : A list of extracted files.
+## Output : A list of extracted files.
 ```bash
 ./result
 ├── AnonymousFunction.js
