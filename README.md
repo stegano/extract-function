@@ -28,11 +28,28 @@ ef.getClosestFunction(); // -> `function basicFuc() {\n      // OK\n    }`
 
 # Using the Command Line
 ```bash
-./node_modules/.bin/extract-function -i "./test/sample.js" -o "./result"
+Usage
+
+  extract-function --src files --out directory --beautify boolean
+
+Example
+
+  $ extract-function -s ./src/**.js -o ./test/extractFiles --beatufiy false
+
+Options
+
+  -s, --src files          A list of files containing annotations to extract.
+  -o, --out directory      The directory where extracted files will be created.
+  -b, --beautify boolean   Apply beautify-js to the extracted files.
+  --help                   Display this usage guide.
 ```
 
 
-## ./test/sample.js
+# Demo
+```bash
+./node_modules/.bin/extract-function -s ./test/sample.js -o ./result
+```
+
 ```javascript
 (() => {
   /**
