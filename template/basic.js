@@ -1,5 +1,5 @@
 /**
- * AMD 또는 CommonJS 사용 가능하도록 모듈을 제공하는 템플릿.
+ * This template is supports AMD and CommonJS and Browser global scope.
  * */
 (function (extract) {
   if (typeof module === "object" && module.exports) {
