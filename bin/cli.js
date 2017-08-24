@@ -5,13 +5,13 @@ var path = require("path");
 var fs = require("fs");
 var mkdirp = require("mkdirp");
 var beautify = require("js-beautify");
-var cla = require("command-line-args");
-var clu = require("command-line-usage");
+var commandLineArgs = require("command-line-args");
+var commandLineUsage = require("command-line-usage");
 
 /**
- * 커맨드라인 설정
+ * Command Line settings.
  * */
-var options = cla([
+var options = commandLineArgs([
   {
     name: "src",
     alias: "s",
@@ -35,17 +35,17 @@ var options = cla([
 ]);
 
 /**
- * 도움말.
+ * Command Line Manual.
  * */
 if ("help" in options) {
-  var manual = clu([
+  var manual = commandLineUsage([
     {
       header: "Usage",
       content: "[bold]{extract-function} [bold]{--src} [underline]{files} [bold]{--out} [underline]{directory} [bold]{--beautify} [underline]{boolean}"
     },
     {
       header: "Example",
-      content: "$ extract-function -s ./src/**.js -o ./test/extractFiles --beatufiy false"
+      content: "$ extract-function -s ./src/**.js -o ./test/extractFiles --beautify false"
     },
     {
       header: "Options",
@@ -79,12 +79,12 @@ if ("help" in options) {
 }
 
 /**
- * 함수를 담을 템플릿을 로드함.
+ * Gets the source code wrapper template.
  * */
 var template = fs.readFileSync(path.resolve(__dirname, "../template/basic.js"), "utf8");
 
 /**
- * 추출할 파일 목록을 가져옴.
+ * Gets extract file list.
  * */
 if (options.out) {
   /**
@@ -98,7 +98,7 @@ if (options.out) {
 }
 
 /**
- * 파일 본문 내용을 읽어와 함수 정보를 추출.
+ * Extracts function information from contents of the loaded file.
  * */
 var files = options.src.map(function (file) {
   var sourceCode = fs.readFileSync(file, "utf8");
@@ -108,7 +108,7 @@ var files = options.src.map(function (file) {
 });
 
 /**
- * 각 파일에서 추출된 함수 정보들을 새로운 파일에 씀.
+ *  The function information extracted from each file is written to a new file.
  * */
 files.forEach(function (extractedCode) {
   extractedCode.forEach(function (item) {
@@ -125,7 +125,7 @@ files.forEach(function (extractedCode) {
       fs.writeFileSync(path.join(options.out, item.name + ".js"), jsCode, "utf8");
     } else {
       /**
-       * 내보낼 파일 경로가 없을 경우 콘솔에 출력.
+       * Output to console if there is no file path to export.
        * */
       process.stdout.write(`/** @function ${item.name} **/`);
       process.stdout.write(jsCode);
