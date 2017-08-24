@@ -1,3 +1,5 @@
+[![GitHub release](https://img.shields.io/github/release/stegano/extract-function.svg)]()
+
 You can extract the function in the source code and use it for testing.
 
 # Installation
