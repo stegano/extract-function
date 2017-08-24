@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-
 var Extractor = require("../lib/Extractor");
 var path = require("path");
 var fs = require("fs");
-var glob = require("glob");
 var mkdirp = require("mkdirp");
 var beautify = require("js-beautify");
 var commandLineArgs = require("command-line-args");
@@ -17,7 +15,7 @@ var options = commandLineArgs([
     name: "src",
     alias: "s",
     type: String,
-    multiple: true,
+    multiple: false,
     defaultValue: []
   },
   {
@@ -85,7 +83,7 @@ if ("help" in options) {
 var template = fs.readFileSync(path.resolve(__dirname, "../template/basic.js"), "utf8");
 
 /**
- * Gets extract file list.
+ * Gets the list of files to extract.
  * */
 if (options.out) {
   /**
@@ -101,13 +99,22 @@ if (options.out) {
 /**
  * Extracts function information from contents of the loaded file.
  * */
-var files = options.src.map(function (file) {
-  var sourceCode = fs.readFileSync(file, "utf8");
-  return new Extractor(sourceCode, {
-    beautify: false
-  }).getExtractCode();
+var files = [];
+options.src.forEach(function getFileInfo(srcPath) {
+  var isDirectory = fs.statSync(srcPath).isDirectory();
+  if (isDirectory) {
+    fs.readdirSync(srcPath).forEach(function (item) {
+      var absPath = path.resolve(srcPath, item);
+      getFileInfo(absPath);
+    });
+  } else {
+    var sourceCode = fs.readFileSync(srcPath, "utf8");
+    var extractor = new Extractor(sourceCode, {
+      beautify: false
+    });
+    files.push(extractor.getExtractCode());
+  }
 });
-
 /**
  *  The function information extracted from each file is written to a new file.
  * */
