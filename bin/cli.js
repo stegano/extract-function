@@ -3,6 +3,7 @@
 var Extractor = require("../lib/Extractor");
 var path = require("path");
 var fs = require("fs");
+var glob = require("glob");
 var mkdirp = require("mkdirp");
 var beautify = require("js-beautify");
 var commandLineArgs = require("command-line-args");
@@ -88,7 +89,7 @@ var template = fs.readFileSync(path.resolve(__dirname, "../template/basic.js"), 
  * */
 if (options.out) {
   /**
-   * 추출될 파일 디렉토리 생성.
+   * Create a file directory to be extracted.
    * */
   mkdirp(options.out, function (err) {
     if (err) {
